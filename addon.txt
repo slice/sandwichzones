@@ -1,0 +1,6 @@
+"AddonInfo"
+{
+	"name" "Sandwich Zones"
+	"author_name" "System16"
+	"info" "Customizable zones."
+}
