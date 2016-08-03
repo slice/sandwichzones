@@ -1,3 +1,5 @@
+# Hooks #
+
 - `SZ_Initialize`
 	- Realms: Client, Server
 	- Called after the SZ table is populated.
