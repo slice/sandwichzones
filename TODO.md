@@ -4,3 +4,4 @@
 - [ ] Split files into smaller files
 - [ ] Make codebase neater
 - [ ] Add more comments
+- [ ] Decrease indent levels
