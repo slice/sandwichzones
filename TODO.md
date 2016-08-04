@@ -1,7 +1,7 @@
 # TODO #
 
 - [ ] **Modules**
-- [ ] Split files into smaller files
-- [ ] Make codebase neater
+- [x] Split files into smaller files
+- [x] Make codebase neater
 - [ ] Add more comments
-- [ ] Decrease indent levels
+- [x] Decrease indent levels
