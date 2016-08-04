@@ -120,7 +120,7 @@ SZ.ZoneProperties = {
 			if PlayerWeaponsCache[ply_uid]
 				-- For each weapon in th cache, refund.
 				for _, weapon in ipairs PlayerWeaponsCache[ply\UserID!].weapons do
-					SZ.Log("zonep: strip refund: #{weapon.class} clip1: #{weapon.clip1} clip2: {weapon.clip2}")
+					SZ.Log("zonep: strip refund: #{weapon.class} clip1: #{weapon.clip1} clip2: #{weapon.clip2}")
 					-- Give back the actual weapon.
 					ply\Give weapon.class
 

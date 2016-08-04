@@ -20,7 +20,9 @@ SZ.Zone.Rebroadcast = ->
 SZ.Zone.SendAll = (ply) ->
 	SZ.Log "zone: sending zones to #{ply\Nick!} (#{ply\SteamID!})"
 	net.Start "sz_zones"
-	net.WriteTable SZ.Zone.GetAll! or {}
+	zones = SZ.Zone.GetAll!
+	SZ.Log "zone: debug: #{zones} #{type(zones)}"
+	net.WriteTable zones or {}
 	net.Send ply
 
 
@@ -94,7 +96,7 @@ SZ.Zone.Add = (start, end_, ply) ->
 		start: { start.x, start.y, start.z },
 		end: { end_.x, end_.y, end_.z },
 		created_by: ply\SteamID!
-		created_by_64: ply\SteamID64,
+		created_by_64: ply\SteamID64!,
 		created_at: os.time!
 		uuid: SZ.UUID!
 

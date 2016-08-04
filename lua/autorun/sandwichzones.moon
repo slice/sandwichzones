@@ -13,7 +13,7 @@ if SERVER
 		"cl_zoneui.lua", "sh_zoneproperties.lua",
 	}
 
-	[AddCSLuaFile "sandwichzones" .. file for _, file in ipairs sendtoclient]
+	[AddCSLuaFile "sandwichzones/#{file}" for _, file in ipairs sendtoclient]
 
 	include "sandwichzones/sh_init.lua"
 	include "sandwichzones/sv_init.lua"
