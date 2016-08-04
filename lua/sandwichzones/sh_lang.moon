@@ -14,6 +14,7 @@ SZ.Lang.ZonePropNiceSlayNonAdmin = "Slay non admin"
 SZ.Lang.ZonePropNiceStripWeapons = "Strip weapons"
 SZ.Lang.ZonePropNiceDisallowJump = "Disallow jumping"
 SZ.Lang.ZonePropNiceSBDisallowObjectSpawn = "[Sandbox] Disallow prop spawning"
+SZ.Lang.ZonePropNiceDisallowSprint = "Disallow sprinting"
 
 SZ.Lang.UITitleSettings = "Sandwich Zones Settings"
 SZ.Lang.UITitleMenu = "Sandwich Zones Menu"

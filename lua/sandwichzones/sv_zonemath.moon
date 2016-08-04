@@ -1,6 +1,8 @@
 SZ.Zone.PlayerInZone = (ply) ->
 	zones = SZ.Zone.GetAll()
 
+	-- Only check if the player is in a zone
+	-- if there are any zones.
 	return false unless zones
 
 	for _, zone in ipairs zones do

@@ -9,4 +9,6 @@ set REALOUTPUT=C:\Program Files (x86)\Steam\steamapps\common\GarrysMod\garrysmod
 mkdir "%OUTPUT%"
 %MOONCC% -t "%OUTPUT%" .\lua\**\*.moon
 %MOONCC% -t "%OUTPUT%" .\lua\ulx\modules\sh\ulx_sandwichzones.moon
+%MOONCC% -t "%OUTPUT%" .\lua\sandwichzones\properties\*.moon
+
 XCOPY /E /F /Y "%OUTPUT%\*" "%REALOUTPUT%"

@@ -137,13 +137,13 @@ SZ.CL.Notify = (text) ->
 --	For the time being, this only handles !szmark,
 --	and is not part of ULX.
 SZ.CL.HandleCMD = (ply, text, teamonly, dead) ->
-	tokens = string.Split(text, " ")
+	tokens = string.Split text, " "
 
 	if tokens[1] == "!szmark"
 		return true unless SZ.CL.Active
 
 		SZ.CL.Stage += 1
-		SZ.Log("zoneui: stage: " .. SZ.CL.Stage)
+		SZ.Log "zoneui: stage: #{SZ.CL.Stage}"
 
 		if SZ.CL.Stage == 1
 			-- Mark top left corner of cubical area
@@ -157,20 +157,27 @@ SZ.CL.HandleCMD = (ply, text, teamonly, dead) ->
 			SZ.CL.Stage = 0
 			SZ.CL.Active = false
 
+			-- Arguments as table.
+			args = {
+				SZ.CL.FirstPos.x
+				SZ.CL.FirstPos.y
+				SZ.CL.FirstPos.z
+				SZ.CL.SecondPos.x
+				SZ.CL.SecondPos.y
+				SZ.CL.SecondPos.z
+			}
+
+			-- Convert all arguments into strings.
+			for k, v in ipairs args do args[k] = tostring(v)
+
 			-- Shhh.
 			--
 			-- Execute command to create a zone.
 			-- The visual editing is only a "frontend".
-			RunConsoleCommand "ulx", "szrawcreatezone",
-				tostring(SZ.CL.FirstPos.x),
-				tostring(SZ.CL.FirstPos.y),
-				tostring(SZ.CL.FirstPos.z),
-				tostring(SZ.CL.SecondPos.x),
-				tostring(SZ.CL.SecondPos.y),
-				tostring(SZ.CL.SecondPos.z)
+			RunConsoleCommand "ulx", "szrawcreatezone", unpack args
 
 			-- Attempt to recache zones.
-			net.Start("sz_zones")
+			net.Start "sz_zones"
 			net.SendToServer!
 		return true
 
@@ -217,7 +224,7 @@ net.Receive "sz_zoneui", ->
 
 -- Receive zones from the server.
 net.Receive "sz_zones", ->
-	SZ.Log("zoneui: cached new zones from server.")
+	SZ.Log "zoneui: cached new zones from server."
 	data = net.ReadTable!
 	SZ.CL.Zones = data
 	hook.Call "SZ_CL_ZonesCached", nil, data

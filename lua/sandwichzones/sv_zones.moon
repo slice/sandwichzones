@@ -20,9 +20,7 @@ SZ.Zone.Rebroadcast = ->
 SZ.Zone.SendAll = (ply) ->
 	SZ.Log "zone: sending zones to #{ply\Nick!} (#{ply\SteamID!})"
 	net.Start "sz_zones"
-	zones = SZ.Zone.GetAll!
-	SZ.Log "zone: debug: #{zones} #{type(zones)}"
-	net.WriteTable zones or {}
+	net.WriteTable SZ.Zone.GetAll! or {}
 	net.Send ply
 
 

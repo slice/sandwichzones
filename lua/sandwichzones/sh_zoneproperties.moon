@@ -64,86 +64,25 @@ SZ.ZoneProperties = {
 	SlayNonAdmin:
 		NiceName: SZ.Lang.ZonePropNiceSlayNonAdmin
 		OnEnter: (ply, zone) ->
-			ply\Kill! unless ply\IsAdmin! or ply\IsSuperAdmin!
+			ply\Kill! unless (ply\IsAdmin! or ply\IsSuperAdmin!)
 
-	-- Strip weapons
+	-- Disallow sprint
 	--
-	-- Players get their weapons stripped upon entering,
-	-- and are returned after exiting the zone.
-	--
-	-- Weapons are preserved. They are stored in PlayerWeaponsCache.
-	StripWeapons:
-		NiceName: SZ.Lang.ZonePropNiceStripWeapons
+	-- Does what it says on the tin -- it disallows
+	-- sprinting.
+	DisallowSprint:
+		NiceName: SZ.Lang.ZonePropNiceDisallowSprint
 		OnEnter: (ply, zone) ->
-			ply_uid = ply\UserID!
-
-			-- Store this player's weapons in the weapon cache.
-			-- We don't store the actual weapon entity
-			-- because it gets destroyed due to stripping the player.
-			PlayerWeaponsCache[ply_uid] = {
-				-- Contains weapons metadata.
-				-- Doesn't store the actual weapon itself!
-				weapons: {}
-
-				-- Contains ammo metadata.
-				--
-				-- Each entry is as follows:
-				-- [AMMO_TYPE] = AMMO_AMOUNT
-				ammo: {}
-			}
-
-			-- For each weapon this player has create metadata.
-			for _, weapon in ipairs ply\GetWeapons! do
-				-- Append weapon meta.
-				meta = {
-					class: weapon\GetClass!
-					clip1: weapon\Clip1!
-					clip2: weapon\Clip2!
-					clip1type: weapon\GetPrimaryAmmoType!
-					clip2type: weapon\GetSecondaryAmmoType!
-				}
-
-				table.insert(PlayerWeaponsCache[ply_uid].weapons, meta)
-
-				-- Make sure to include ammo.
-				PlayerWeaponsCache[ply_uid].ammo[weapon\GetPrimaryAmmoType!] = ply\GetAmmoCount(weapon\GetPrimaryAmmoType!)
-				PlayerWeaponsCache[ply_uid].ammo[weapon\GetSecondaryAmmoType!] = ply\GetAmmoCount(weapon\GetSecondaryAmmoType!)
-
-			-- Strip the player.
-			ply\StripAmmo!
-			ply\StripWeapons!
+			ply.SprintingSpeed = ply\GetRunSpeed!
+			ply\SetRunSpeed ply\GetWalkSpeed!
 		OnExit: (ply, zone) ->
-			ply_uid = ply\UserID!
-
-				-- Only refund the player's weapons if they actually
-				-- have cached weapons.
-			if PlayerWeaponsCache[ply_uid]
-				-- For each weapon in th cache, refund.
-				for _, weapon in ipairs PlayerWeaponsCache[ply\UserID!].weapons do
-					SZ.Log("zonep: strip refund: #{weapon.class} clip1: #{weapon.clip1} clip2: #{weapon.clip2}")
-					-- Give back the actual weapon.
-					ply\Give weapon.class
-
-					-- Strip ammo.
-					ply\StripAmmo!
-
-					-- Give back clips.
-					ply\GetWeapon(weapon.class)\SetClip1(weapon.clip1)
-					ply\GetWeapon(weapon.class)\SetClip2(weapon.clip2)
-
-				-- Remove ammo, because we will manually refund it.
-				ply\StripAmmo!
-
-				-- For each ammo type, refund ammo.
-				for ammotype, ammoamount in pairs PlayerWeaponsCache[ply\UserID!].ammo do
-					SZ.Log("zonep: strip refund: ammo: refunding #{ammoamount} of #{ammotype}")
-
-					-- Give back ammo.
-					ply\GiveAmmo(ammoamount, ammotype, false)
-
-				-- Remove from cache.
-				PlayerWeaponsCache[ply\UserID!] = nil
+			ply\SetRunSpeed ply.SprintingSpeed if ply.SprintingSpeed
 }
+
+-- Include additional properties
+-- that need their own files.
+SZ.Log "zonep: init zone property modules"
+include "properties/pr_weaponstrip.lua"
 
 SBNoObjectSpawningPlys = {}
 SandboxProperties = {
