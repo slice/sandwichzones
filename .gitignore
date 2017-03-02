@@ -1,2 +1,5 @@
 # ignore build files
 output/
+
+# ignore lua files
+*.lua

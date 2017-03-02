@@ -1,10 +1,20 @@
 @ECHO OFF
 
 REM MoonScript compiler.
-SET MOONPATH=C:\Users\cheesy\Documents\Moon
+SET GARRYSMOD=C:\Program Files (x86)\Steam\steamapps\common\GarrysMod
+SET MOONPATH=C:\Users\%USERNAME%\Documents\Moon
 SET MOONCC=%MOONPATH%\moonc.exe
 SET OUTPUT=.\output
-set REALOUTPUT=C:\Program Files (x86)\Steam\steamapps\common\GarrysMod\garrysmod\addons\sandwichzones
+set REALOUTPUT=%GARRYSMOD%\garrysmod\addons\sandwichzones
+
+ECHO SandwichZones build process
+ECHO - GarrysMod folder: %GARRYSMOD%
+ECHO - Moonscript compiler folder: %MOONPATH%
+ECHO - Moonc.exe: %MOONCC%
+ECHO - Output: %OUTPUT%
+ECHO - Real output: %REALOUTPUT%
+
+ECHO Compiling now...
 
 mkdir "%OUTPUT%"
 %MOONCC% -t "%OUTPUT%" .\lua\**\*.moon
