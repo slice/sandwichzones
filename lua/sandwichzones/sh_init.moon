@@ -48,7 +48,7 @@ SZ.Error = (text) ->
 --
 -- Use this to get the user's attention.
 SZ.ErrorBanner = ->
-	MsgC vSZ.LogRed, [[
+	MsgC SZ.LogRed, [[
 
   d88888b d8888b. d8888b.  .d88b.  d8888b.
   88'     88  `8D 88  `8D .8P  Y8. 88  `8D
